@@ -6,7 +6,7 @@ export _PRIVATE_IP=$(curl -s http://169.254.169.254/metadata/v1/interfaces/priva
 
 ## installation
 apt-get update
-apt-get -qqy install ${LINUX_PACKAGES}
+apt-get -qqy install nfs-common unzip git patch python3-pip acl attr imagemagick snmp
 
 ## create user
 useradd -d /home/${BRAND} -s /sbin/nologin ${BRAND}
