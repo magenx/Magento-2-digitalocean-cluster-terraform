@@ -15,11 +15,6 @@ variable "vpc_cidr" {
   default = "10.35.0.0/16"
 }
 
-variable "packer_snapshot" {
-  description  = "The name of packer builder final snapshot"
-  default      = "packer-builder-frontend"
-}
-
 variable "alert_email" {
   description  = "Send monitoring alerts to this email"
   default = "alert@magenx.com"
@@ -73,9 +68,10 @@ variable "services" {
   }
 }
 
-variable "packer_size" {
+variable "packer" {
   description = "The size slug of packer build droplet"
   default      = {
+    snapshot   = "packer-builder-frontend"
     size       = "s-1vcpu-1gb-intel"
   }
 }
