@@ -19,6 +19,8 @@ resource "digitalocean_droplet" "services" {
   ssh_keys      = [var.admin_ssh_key.id,var.manager_ssh_key.id]
   tags          = [digitalocean_tag.services[each.key].id]
   user_data     = templatefile("${path.module}/user_data/template.yml", {
+                    service        = each.key
+                    domain         = var.domain
                     timezone       = var.timezone
                     ssh_users      = local.ssh_users
                     ssh_config     = local.ssh_config
