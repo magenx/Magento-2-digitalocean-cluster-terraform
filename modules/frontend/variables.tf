@@ -51,11 +51,6 @@ variable "size" {
   type        = string
 }
 
-variable "packer_size" {
-  description = "The size slug of packer build droplet"
-  type        = string
-}
-
 variable "monitoring" {
   description = "Enable monitoring for droplet"
   type        = bool
