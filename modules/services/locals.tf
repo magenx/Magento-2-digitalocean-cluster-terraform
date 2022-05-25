@@ -38,7 +38,7 @@ locals {
       {
         MARIADB_VERSION    = var.mariadb_version
         DATABASE_USER_NAME = var.brand
-        DATABASE_NAME      = "${var.brand}_${var.environment}"
+        DATABASE_NAME      = "${var.brand}_${lower(var.project.environment)}"
         DATABASE_PASSWORD  = random_password.services["database"].result
       }
     )
