@@ -12,12 +12,12 @@ resource "null_resource" "packer" {
     working_dir = "${path.module}/packer"
     command = <<EOF
 PACKER_LOG=1 PACKER_LOG_PATH="packerlog" /usr/bin/packer build \
--var size="${var.packer_size}" \
+-var size="${var.packer.size}" \
 -var image="${data.digitalocean_image.default.slug}" \
 -var region="${var.region}" \
 -var vpc_default_id="${data.digitalocean_vpc.default.id}" \
 -var project_name="${var.project.name}" \
--var packer_snapshot="${var.packer_snapshot}" \
+-var packer_snapshot="${var.packer.snapshot}" \
 -var BRAND="${var.brand}" \
 -var PHP_USER="php-${var.brand}" \
 -var WEB_ROOT_PATH="/home/${var.brand}/public_html" \
