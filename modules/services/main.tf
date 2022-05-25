@@ -54,7 +54,7 @@ resource "digitalocean_volume_attachment" "media" {
 # Assign services droplets with volume to this project
 # # ---------------------------------------------------------------------------------------------------------------------#
 resource "digitalocean_project_resources" "services" {
-  project   = var.project_id
+  project   = var.project.id
   resources = concat(values(digitalocean_droplet.services)[*].urn,[digitalocean_volume.media.urn])
 }
 
