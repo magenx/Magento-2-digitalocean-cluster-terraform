@@ -7,7 +7,7 @@
 # Create firewall for manager master droplet
 # # ---------------------------------------------------------------------------------------------------------------------#
 resource "digitalocean_firewall" "manager" {
-  name        = "${var.project_name}-manager-firewall"
+  name        = "${var.project.name}-manager-firewall"
   droplet_ids = [digitalocean_droplet.manager.id]
   tags        = [digitalocean_tag.manager_firewall.id]
 
@@ -45,5 +45,5 @@ resource "digitalocean_firewall" "manager" {
 # Create tag for manager firewall
 # # ---------------------------------------------------------------------------------------------------------------------#
 resource "digitalocean_tag" "manager_firewall" {
-  name = "${var.project_name}-manager-firewall"
+  name = "${var.project.name}-manager-firewall"
 }
