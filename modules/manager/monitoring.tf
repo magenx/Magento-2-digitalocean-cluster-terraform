@@ -21,7 +21,7 @@ resource "digitalocean_monitor_alert" "cpu" {
     [var.frontend_id],
     var.services_ids
     )
-  description = "Alert about CPU usage for services @ ${var.project_name}"
+  description = "Alert about CPU usage for services @ ${var.project.name}"
 }
 # # ---------------------------------------------------------------------------------------------------------------------#
 # Create monitoring alert for memory
@@ -40,7 +40,7 @@ resource "digitalocean_monitor_alert" "memory" {
     [var.frontend_id],
     var.services_ids
     )
-  description = "Alert about RAM usage for services @ ${var.project_name}"
+  description = "Alert about RAM usage for services @ ${var.project.name}"
 }
 # # ---------------------------------------------------------------------------------------------------------------------#
 # Create monitoring alert for disk
@@ -59,5 +59,5 @@ resource "digitalocean_monitor_alert" "disk" {
     [var.frontend_id],
     var.services_ids
     )
-  description = "Alert about DISK usage for services @ ${var.project_name}"
+  description = "Alert about DISK usage for services @ ${var.project.name}"
 }
