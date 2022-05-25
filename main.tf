@@ -10,7 +10,6 @@ module "network" {
   source       = "./modules/network"
   project      = local.project
   vpc_cidr     = var.vpc_cidr
-  environment  = local.environment
   region       = var.region
 }
 
@@ -20,7 +19,6 @@ module "network" {
 module "loadbalancer" {
   source           = "./modules/loadbalancer"
   project          = local.project
-  environment      = local.environment
   region           = var.region
   vpc_uuid         = module.network.vpc_uuid
   size             = var.loadbalancer.size
@@ -33,7 +31,6 @@ module "loadbalancer" {
 module "manager" {
   source          = "./modules/manager"
   project         = local.project
-  environment     = local.environment
   vpc_uuid        = module.network.vpc_uuid
   vpc_cidr        = var.vpc_cidr
   image           = var.default_image
@@ -61,7 +58,6 @@ module "services" {
   source          = "./modules/services"
   services        = var.services
   project         = local.project
-  environment     = local.environment
   image           = var.default_image
   region          = var.region
   monitoring      = var.monitoring
@@ -87,7 +83,6 @@ module "services" {
 module "frontend" {
   source          = "./modules/frontend"
   project         = local.project
-  environment     = local.environment
   image           = var.default_image
   region          = var.region
   size            = var.frontend.size
