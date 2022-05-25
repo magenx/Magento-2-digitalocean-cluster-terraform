@@ -9,7 +9,7 @@
 resource "digitalocean_droplet" "services" {
   for_each      = var.services
   image         = var.image
-  name          = "${var.project_name}-${each.key}"
+  name          = "${var.project.name}-${each.key}"
   region        = var.region
   size          = each.value.size
   monitoring    = var.monitoring
@@ -31,17 +31,17 @@ resource "digitalocean_droplet" "services" {
 # # ---------------------------------------------------------------------------------------------------------------------#
 resource "digitalocean_tag" "services" {
   for_each = var.services
-  name     = "${var.project_name}-${each.key}"
+  name     = "${var.project.name}-${each.key}"
 }
 # # ---------------------------------------------------------------------------------------------------------------------#
 # Create volume for media droplet storage
 # # ---------------------------------------------------------------------------------------------------------------------#
 resource "digitalocean_volume" "media" {
   region                  = var.region
-  name                    = "${var.project_name}-media-volume"
+  name                    = "${var.project.name}-media-volume"
   size                    = var.services.media.volume
   initial_filesystem_type = "ext4"
-  description             = "Volume for media droplet @ ${var.project_name}"
+  description             = "Volume for media droplet @ ${var.project.name}"
 }
 # # ---------------------------------------------------------------------------------------------------------------------#
 # Attach volume to media droplet
