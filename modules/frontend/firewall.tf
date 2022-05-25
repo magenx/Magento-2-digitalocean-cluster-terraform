@@ -7,7 +7,7 @@
 # Create firewall for frontend
 # # ---------------------------------------------------------------------------------------------------------------------#
 resource "digitalocean_firewall" "frontend" {
-  name        = "${var.project_name}-frontend-firewall"
+  name        = "${var.project.name}-frontend-firewall"
   droplet_ids = [digitalocean_droplet.frontend.id]
   tags        = [digitalocean_tag.frontend_firewall.id]
 
@@ -81,5 +81,5 @@ resource "digitalocean_firewall" "frontend" {
 # Create tag for frontend firewall
 # # ---------------------------------------------------------------------------------------------------------------------#
 resource "digitalocean_tag" "frontend_firewall" {
-  name     = "${var.project_name}-frontend-firewall"
+  name     = "${var.project.name}-frontend-firewall"
 }
