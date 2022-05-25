@@ -16,11 +16,6 @@ variable "project" {
 })
 }
 
-variable "environment" {
-  description  = "Environment selected to deploy this configuration to"
-  type         = string
-}
-
 variable "brand" {
   description  = "Business name or brand name for this infrastructure"
   type         = string
