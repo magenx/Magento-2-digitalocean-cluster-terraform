@@ -7,7 +7,7 @@
 # Create certificate for load balancer
 # # ---------------------------------------------------------------------------------------------------------------------#
 resource "digitalocean_certificate" "this" {
-  name    = "${var.project_name}-${local.domain}"
+  name    = "${var.project.name}-${local.domain}"
   type    = "lets_encrypt"
   domains = [local.domain]
 
@@ -19,7 +19,7 @@ resource "digitalocean_certificate" "this" {
 # Create load balancer
 # # ---------------------------------------------------------------------------------------------------------------------#
 resource "digitalocean_loadbalancer" "this" {
-  name                   = "${var.project_name}-loadbalancer"
+  name                   = "${var.project.name}-loadbalancer"
   region                 = var.region
   vpc_uuid               = var.vpc_uuid
   size                   = var.size
@@ -53,7 +53,7 @@ resource "digitalocean_loadbalancer" "this" {
 # Assign loadbalancer to this project per environment
 # # ---------------------------------------------------------------------------------------------------------------------#
 resource "digitalocean_project_resources" "loadbalancer" {
-  project   = var.project_id
+  project   = var.project.id
   resources = [
     digitalocean_loadbalancer.this.urn
   ]
