@@ -36,7 +36,3 @@ variable "algorithm" {
   type         = string
 }
 
-locals {
-   domains_list = csvdecode(file("${path.module}/domains.csv"))
-   domain       = local.domains_list[0]["${var.environment}"]
-}
