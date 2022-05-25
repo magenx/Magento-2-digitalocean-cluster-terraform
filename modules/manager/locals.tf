@@ -13,7 +13,7 @@ locals {
         IMAGE       = var.image
         REGION      = var.region
         DOMAIN      = var.domain
-        PROJECT     = var.project_name
+        PROJECT     = var.project.name
         ALERT_EMAIL = var.alert_email
         USER_DATA   = local.user_data
         SSH_PORT    = var.ssh_port
