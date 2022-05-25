@@ -8,7 +8,7 @@
 # # ---------------------------------------------------------------------------------------------------------------------#
 resource "digitalocean_droplet" "frontend" {
   image         = data.digitalocean_images.packer.images[0].id
-  name          = "${var.project_name}-frontend"
+  name          = "${var.project.name}-frontend"
   region        = var.region
   size          = var.size
   monitoring    = var.monitoring
@@ -33,7 +33,7 @@ resource "digitalocean_droplet" "frontend" {
 # Create tag for frontend droplet
 # # ---------------------------------------------------------------------------------------------------------------------#
 resource "digitalocean_tag" "frontend" {
-  name     = "${var.project_name}-frontend"
+  name     = "${var.project.name}-frontend"
 }
 # # ---------------------------------------------------------------------------------------------------------------------#
 # Create tag for frontend droplet to connect for loadbalancer
@@ -45,7 +45,7 @@ resource "digitalocean_tag" "frontend_loadbalancer" {
 # Assign droplets to this project per environment
 # # ---------------------------------------------------------------------------------------------------------------------#
 resource "digitalocean_project_resources" "frontend" {
-  project   = var.project_id
+  project   = var.project.id
   resources = [
     digitalocean_droplet.frontend.urn
   ]
