@@ -21,6 +21,12 @@ variable "brand" {
   type         = string
 }
 
+variable "domain" {
+  description  = "Domain name for this project"
+  type         = string
+}
+
+
 variable "region" {
   description  = "Region for this project and environment"
   type         = string
