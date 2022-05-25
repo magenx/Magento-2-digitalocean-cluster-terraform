@@ -21,11 +21,6 @@ variable "vpc_cidr" {
   type         = string
 }
 
-variable "environment" {
-  description  = "Environment selected to deploy this configuration to"
-  type         = string
-}
-
 variable "region" {
   description  = "Region for this project and environment"
   type         = string
