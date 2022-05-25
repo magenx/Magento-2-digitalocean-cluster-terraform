@@ -1,4 +1,6 @@
 #cloud-config
+hostname: ${service}
+fqdn: ${service}.${domain}
 package_update:  true
 package_upgrade: true
 timezone: ${timezone}
