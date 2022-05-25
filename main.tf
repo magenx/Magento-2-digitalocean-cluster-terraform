@@ -107,8 +107,7 @@ module "frontend" {
   domain          = module.loadbalancer.domain
   media_ip        = module.services.media_ip
   brand           = var.brand
-  packer_snapshot = var.packer_snapshot
-  packer_size     = var.packer_size
+  packer          = var.packer
 }
   
   
