@@ -1,0 +1,51 @@
+
+
+
+//////////////////////////////////////////////////////[ FRONTEND WORKER ]/////////////////////////////////////////////////
+
+# # ---------------------------------------------------------------------------------------------------------------------#
+# Create droplet for frontend worker
+# # ---------------------------------------------------------------------------------------------------------------------#
+resource "digitalocean_droplet" "frontend" {
+  image         = data.digitalocean_images.packer.images[0].id
+  name          = "${var.project_name}-frontend"
+  region        = var.region
+  size          = var.size
+  monitoring    = var.monitoring
+  backups       = var.backups
+  vpc_uuid      = var.vpc_uuid
+  droplet_agent = var.droplet_agent
+  tags          = [
+    digitalocean_tag.frontend.id,
+    digitalocean_tag.frontend_loadbalancer.id
+  ]
+  user_data     = templatefile("${path.module}/user_data/frontend.yml", 
+    { 
+      ADMIN_SSH_KEY       = var.admin_ssh_key.public_key
+      MANAGER_SSH_KEY     = var.manager_ssh_key.public_key
+      TIMEZONE            = var.timezone
+      SSH_PORT            = var.ssh_port
+    }
+  )
+}
+# # ---------------------------------------------------------------------------------------------------------------------#
+# Create tag for frontend droplet
+# # ---------------------------------------------------------------------------------------------------------------------#
+resource "digitalocean_tag" "frontend" {
+  name     = "${var.project_name}-frontend"
+}
+# # ---------------------------------------------------------------------------------------------------------------------#
+# Create tag for frontend droplet to connect for loadbalancer
+# # ---------------------------------------------------------------------------------------------------------------------#
+resource "digitalocean_tag" "frontend_loadbalancer" {
+  name     = "loadbalancer"
+}
+# # ---------------------------------------------------------------------------------------------------------------------#
+# Assign droplets to this project per environment
+# # ---------------------------------------------------------------------------------------------------------------------#
+resource "digitalocean_project_resources" "frontend" {
+  project   = var.project_id
+  resources = [
+    digitalocean_droplet.frontend.urn
+  ]
+}

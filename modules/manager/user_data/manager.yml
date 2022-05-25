@@ -1,0 +1,68 @@
+#cloud-config
+package_update:  true
+package_upgrade: true
+packages:
+ - wget 
+ - postfix
+ - dnsutils
+ - unzip
+ - iptables
+ - git
+ - patch
+ - python3-pip
+ - acl
+ - attr
+ - snmp
+ - rsync
+
+disable_root: true
+ssh_pwauth:   false
+
+users:
+  - name: admin
+    ssh-authorized-keys:
+      - ${ADMIN_SSH_KEY}
+    groups: sudo
+    shell: /bin/bash
+  - name: manager
+    ssh-authorized-keys:
+      - ${MANAGER_SSH_KEY}
+    groups: sudo
+    shell: /bin/bash
+    
+write_files:
+- path: /etc/ssh/ssh_config
+  content: |
+    Host github.com
+     port 22
+    Host ${SSH_CONFIG_HOST}
+     port ${SSH_PORT}
+     StrictHostKeyChecking no
+     UserKnownHostsFile=/dev/null
+     ConnectTimeout=30
+     LogLevel ERROR
+  append: true
+- path: /opt/manager/droplet/create_droplet.sh
+  owner: 'manager:manager'
+  permissions: '0640'
+  defer: true
+  content: |
+    ${create_droplet}
+- path: /opt/manager/droplet/delete_droplet.sh
+  owner: 'manager:manager'
+  permissions: '0640'
+  defer: true
+  content: |
+    ${delete_droplet}
+    
+runcmd:
+ - sed -i -e '/^Port/s/^.*$/Port ${SSH_PORT}/' /etc/ssh/sshd_config
+ - sed -i -e '/^PermitRootLogin/s/^.*$/PermitRootLogin no/' /etc/ssh/sshd_config
+ - restart sshd service
+ - export _PRIVATE_IP=$(curl -s http://169.254.169.254/metadata/v1/interfaces/private/0/ipv4/address)
+ - cd /usr/local/bin
+ - wget https://github.com/digitalocean/doctl/releases/download/v1.75.0/doctl-1.75.0-linux-amd64.tar.gz
+ - tar xf doctl-1.75.0-linux-amd64.tar.gz
+ - rm doctl-1.75.0-linux-amd64.tar.gz
+ - chmod 700 doctl
+  

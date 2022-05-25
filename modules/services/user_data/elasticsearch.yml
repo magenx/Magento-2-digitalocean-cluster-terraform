@@ -1,0 +1,24 @@
+  - wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add -
+  - echo "deb https://artifacts.elastic.co/packages/${ELK_VERSION}/apt stable main" > /etc/apt/sources.list.d/elastic-${ELK_VERSION}.list
+  - apt-get update
+  - apt-get -y install elasticsearch kibana wget postfix unzip iptables git acl attr snmp rsync
+  - |
+    echo "discovery.type: single-node" >> /etc/elasticsearch/elasticsearch.yml
+    echo "xpack.security.enabled: true" >> /etc/elasticsearch/elasticsearch.yml
+    sed -i "s/.*cluster.name.*/cluster.name: magento/" /etc/elasticsearch/elasticsearch.yml
+    sed -i "s/.*node.name.*/node.name: magento-node1/" /etc/elasticsearch/elasticsearch.yml
+    sed -i "s/.*network.host.*/network.host: $${_PRIVATE_IP}/" /etc/elasticsearch/elasticsearch.yml
+    sed -i "s/.*http.port.*/http.port: 9200/" /etc/elasticsearch/elasticsearch.yml
+  - sed -i "s/.*-Xms.*/-Xms512m/" /etc/elasticsearch/jvm.options
+  - sed -i "s/.*-Xmx.*/-Xmx2048m/" /etc/elasticsearch/jvm.options
+  - sed -i "s,#JAVA_HOME=,JAVA_HOME=/usr/share/elasticsearch/jdk/," /etc/default/elasticsearch
+  - |
+    chown -R :elasticsearch /etc/elasticsearch/*
+  - systemctl daemon-reload
+  - systemctl enable elasticsearch
+  - systemctl restart elasticsearch
+  - /usr/share/elasticsearch/bin/elasticsearch-setup-passwords auto -b > /tmp/elasticsearch
+  - export _ELK_PASSWORD="$(awk '/PASSWORD elastic/ { print $4 }' /tmp/elasticsearch)"
+  - |
+    curl -X POST --user elastic:$${_ELK_PASSWORD} "$${_PRIVATE_IP}:9200/_security/user/elastic/_password" -H 'Content-Type: application/json' -d'{"password" : "${ELK_PASSWORD}"}'
+  - rm -rf /tmp/elasticsearch

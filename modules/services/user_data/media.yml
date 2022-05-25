@@ -1,0 +1,10 @@
+  - apt-get update
+  - apt-get install -y wget unzip iptables nfs-kernel-server acl attr snmp rsync jpegoptim webp ipset
+  - mkdir -p ${WEB_ROOT_PATH}/{pub/media,var}
+  - chown -R ${BRAND}:${PHP_USER} ${WEB_ROOT_PATH}/
+  - chmod 2770 ${WEB_ROOT_PATH}/{pub/media,var}
+  - echo "${WEB_ROOT_PATH}/pub/media    ${VPC_CIDR}(rw,sync,no_root_squash,no_subtree_check)" > /etc/exports
+  - echo "${WEB_ROOT_PATH}/var    ${VPC_CIDR}(rw,sync,no_root_squash,no_subtree_check)" >> /etc/exports
+  - exports -ra
+  - systemctl restart nfs-server
+  - echo "/dev/disk/by-id/scsi-0DO_Volume_${VOLUME_NAME} ${WEB_ROOT_PATH}/pub/media ext4 defaults,nofail,discard 0 0" >> /etc/fstab

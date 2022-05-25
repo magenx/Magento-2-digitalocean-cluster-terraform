@@ -1,0 +1,47 @@
+  - curl -sS https://downloads.mariadb.com/MariaDB/mariadb_repo_setup | bash -s -- --mariadb-server-version=${MARIADB_VERSION}
+  - apt-get update
+  - apt-get install -y mariadb-server wget postfix unzip time bc bzip2 tar iptables acl attr snmp rsync
+  - systemctl enable mariadb
+  - wget -qO /etc/my.cnf https://raw.githubusercontent.com/magenx/magento-mysql/master/my.cnf/my.cnf
+  - export _IBPS=$(echo "0.9*$(awk '/MemTotal/ { print $2 / (1024*1024)}' /proc/meminfo | cut -d'.' -f1)" | bc | xargs printf "%1.0f")
+  - sed -i "s/innodb_buffer_pool_size = 4G/innodb_buffer_pool_size = $${_IBPS}G/" /etc/my.cnf
+  - sed -i "s/127.0.0.1/$${_PRIVATE_IP}/" /etc/my.cnf
+  - export _MYSQL_ROOT_PASSWORD_GEN=$(head -c 500 /dev/urandom | tr -dc 'a-zA-Z0-9@%^&?=+_[]{}()<>-' | fold -w 15 | head -n 1)
+  - export _MYSQL_ROOT_PASSWORD="$${_MYSQL_ROOT_PASSWORD_GEN}$${RANDOM}"
+  - systemctl restart mariadb
+  - mariadb-admin status --wait=2 &>/dev/null || { echo -e " [!] MYSQL SERVER DOWN \n"; exit 1; }
+  - |
+    mariadb --connect-expired-password  <<EOMYSQL
+    ALTER USER 'root'@'localhost' IDENTIFIED BY "$${_MYSQL_ROOT_PASSWORD}";
+    DELETE FROM mysql.user WHERE User='';
+    DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
+    DROP DATABASE IF EXISTS test;
+    DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';
+    FLUSH PRIVILEGES;
+    exit
+    EOMYSQL
+  - |
+    cat > /root/.mytop <<END
+    user=root
+    pass=$${_MYSQL_ROOT_PASSWORD}
+    db=mysql
+    END
+  - |
+    cat > /root/.my.cnf <<END
+    [client]
+    user=root
+    password="$${_MYSQL_ROOT_PASSWORD}"
+    END
+  - chmod 600 /root/.my.cnf /root/.mytop
+  - |
+    mariadb <<EOMYSQL
+    CREATE USER '${DATABASE_USER_NAME}'@'$${_PRIVATE_IP}' IDENTIFIED BY '${DATABASE_PASSWORD}';
+    CREATE DATABASE ${DATABASE_NAME};
+    GRANT ALL PRIVILEGES ON ${DATABASE_NAME}.* TO '${DATABASE_USER_NAME}'@'$${_PRIVATE_IP}' WITH GRANT OPTION;
+    exit
+    EOMYSQL
+  - wget https://github.com/s3tools/s3cmd/archive/master.zip -O /opt/master.zip
+  - unzip /opt/master.zip
+  - mv /opt/s3cmd-master /opt/s3cmd
+  - chown -R root.root /opt/s3cmd
+  - chmod 700 /opt/s3cmd

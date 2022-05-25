@@ -1,0 +1,46 @@
+
+
+
+//////////////////////////////////////////////////[ MANAGER MASTER DROPLET ]//////////////////////////////////////////////
+
+# # ---------------------------------------------------------------------------------------------------------------------#
+# Create manager master droplet to control infrastructure [workaround for missing service]
+# # ---------------------------------------------------------------------------------------------------------------------#
+resource "digitalocean_droplet" "manager" {
+  image         = var.image
+  name          = "${var.project_name}-manager"
+  region        = var.region
+  size          = var.size
+  monitoring    = var.monitoring
+  backups       = var.backups
+  vpc_uuid      = var.vpc_uuid
+  droplet_agent = var.droplet_agent
+  tags          = [digitalocean_tag.manager.id]
+  user_data     = templatefile("${path.module}/user_data/manager.yml", 
+    { 
+      SSH_PORT         = var.ssh_port
+      SSH_CONFIG_HOST  = var.ssh_config_host
+      MANAGER_SSH_KEY  = var.manager_ssh_key.public_key
+      ADMIN_SSH_KEY    = var.admin_ssh_key.public_key
+      VPC_CIDR         = var.vpc_cidr
+      create_droplet   = local.cloudinit_for_manager.create_droplet
+      delete_droplet   = local.cloudinit_for_manager.delete_droplet
+    }
+  )
+}
+
+# # ---------------------------------------------------------------------------------------------------------------------#
+# Create tag for manager master droplet
+# # ---------------------------------------------------------------------------------------------------------------------#
+resource "digitalocean_tag" "manager" {
+  name = "${var.project_name}-manager"
+}
+# # ---------------------------------------------------------------------------------------------------------------------#
+# Assign droplets to this project per environment
+# # ---------------------------------------------------------------------------------------------------------------------#
+resource "digitalocean_project_resources" "manager" {
+  project   = var.project_id
+  resources = [
+    digitalocean_droplet.manager.urn
+  ]
+}
