@@ -10,6 +10,7 @@ _NEW_DROPLET_DATA=$(doctl compute droplet create $${_NEW_DROPLET_TAG}-$${RANDOM}
  --tag-names $${_NEW_DROPLET_TAG},loadbalancer \
  --vpc-uuid ${VPC_UUID} \
  --user-data ${USER_DATA} \
+ --ssh_keys ${SSH_KEYS} \
  --no-header \
  --format=ID,PublicIPv4,PrivateIPv4 \
  --wait)
