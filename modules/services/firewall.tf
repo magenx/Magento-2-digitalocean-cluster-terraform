@@ -8,7 +8,7 @@
 # # ---------------------------------------------------------------------------------------------------------------------#
 resource "digitalocean_firewall" "services" {
   for_each    = var.services
-  name        = "${var.project_name}-${each.key}-firewall"
+  name        = "${var.project.name}-${each.key}-firewall"
   droplet_ids = [digitalocean_droplet.services[each.key].id]
   tags        = [digitalocean_tag.services_firewall[each.key].id]
 
@@ -35,5 +35,5 @@ resource "digitalocean_firewall" "services" {
 # # ---------------------------------------------------------------------------------------------------------------------#
 resource "digitalocean_tag" "services_firewall" {
   for_each = var.services
-  name     = "${var.project_name}-${each.key}-firewall"
+  name     = "${var.project.name}-${each.key}-firewall"
 }
