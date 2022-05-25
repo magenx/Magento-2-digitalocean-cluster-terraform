@@ -70,6 +70,7 @@ module "services" {
   admin_ssh_key   = local.admin_ssh_key
   manager_ssh_key = local.manager_ssh_key
   ## app variables
+  domain           = module.loadbalancer.domain
   brand            = var.brand
   elk_version      = var.elk_version
   mariadb_version  = var.mariadb_version
