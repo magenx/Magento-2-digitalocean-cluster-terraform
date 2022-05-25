@@ -14,6 +14,7 @@ resource "digitalocean_droplet" "frontend" {
   monitoring    = var.monitoring
   backups       = var.backups
   vpc_uuid      = var.vpc_uuid
+  ssh_keys      = [var.admin_ssh_key.id,var.manager_ssh_key.id]
   droplet_agent = var.droplet_agent
   tags          = [
     digitalocean_tag.frontend.id,
