@@ -23,24 +23,23 @@ resource "random_string" "project" {
 # Create global project name to be assigned per environment
 # # ---------------------------------------------------------------------------------------------------------------------#
 locals {
-   project     = lower("${var.brand}-${random_string.project.result}")
-   environment = lower(terraform.workspace)
+   project_prefix = lower("${var.brand}-${random_string.project.result}")
+   environment    = lower(terraform.workspace)
 }
 # # ---------------------------------------------------------------------------------------------------------------------#
 # Create project per environment
 # # ---------------------------------------------------------------------------------------------------------------------#
 resource "digitalocean_project" "this" {
-  name        = "${local.project}-${local.environment}"
-  description = "Project for ${local.project} ${local.environment}"
-  purpose     = "Infrastructure for ${local.project} ${local.environment}"
+  name        = "${local.project_prefix}-${local.environment}"
+  description = "Project for ${local.project_prefix} ${local.environment}"
+  purpose     = "Infrastructure for ${local.project_prefix} ${local.environment}"
   environment = title(local.environment)
 }
 # # ---------------------------------------------------------------------------------------------------------------------#
-# Get project name and project id from digitalocean resource
+# Get project data
 # # ---------------------------------------------------------------------------------------------------------------------#
 locals {
-   project_name = digitalocean_project.this.name
-   project_id   = digitalocean_project.this.id
+   project = digitalocean_project.this
 }
 
 
