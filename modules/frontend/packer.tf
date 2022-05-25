@@ -16,7 +16,7 @@ PACKER_LOG=1 PACKER_LOG_PATH="packerlog" /usr/bin/packer build \
 -var image="${data.digitalocean_image.default.slug}" \
 -var region="${var.region}" \
 -var vpc_default_id="${data.digitalocean_vpc.default.id}" \
--var project_name="${var.project_name}" \
+-var project_name="${var.project.name}" \
 -var packer_snapshot="${var.packer_snapshot}" \
 -var BRAND="${var.brand}" \
 -var PHP_USER="php-${var.brand}" \
