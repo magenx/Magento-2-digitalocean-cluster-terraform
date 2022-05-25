@@ -8,7 +8,7 @@
 # # ---------------------------------------------------------------------------------------------------------------------#
 resource "digitalocean_droplet" "manager" {
   image         = var.image
-  name          = "${var.project_name}-manager"
+  name          = "${var.project.name}-manager"
   region        = var.region
   size          = var.size
   monitoring    = var.monitoring
@@ -34,13 +34,13 @@ resource "digitalocean_droplet" "manager" {
 # Create tag for manager master droplet
 # # ---------------------------------------------------------------------------------------------------------------------#
 resource "digitalocean_tag" "manager" {
-  name = "${var.project_name}-manager"
+  name = "${var.project.name}-manager"
 }
 # # ---------------------------------------------------------------------------------------------------------------------#
 # Assign droplets to this project per environment
 # # ---------------------------------------------------------------------------------------------------------------------#
 resource "digitalocean_project_resources" "manager" {
-  project   = var.project_id
+  project   = var.project.id
   resources = [
     digitalocean_droplet.manager.urn
   ]
