@@ -1,12 +1,24 @@
 
 variable "project" {
   description  = "The data of the project"
-  type         = map
+  type         = object({
+    created_at   = string
+    description  = string
+    environment  = string
+    id           = string
+    is_default   = bool
+    name         = string
+    owner_id     = number
+    owner_uuid   = string
+    purpose      = string
+    resources    = set(string)
+    updated_at   = string 
+})
 }
 
-variable "packer_snapshot" {
+variable "packer" {
   description  = "The name of packer builder final snapshot"
-  type         = string
+  type         = map
 }
 
 variable "environment" {
