@@ -8,8 +8,7 @@
 # # ---------------------------------------------------------------------------------------------------------------------#
 module "network" {
   source       = "./modules/network"
-  project_name = local.project_name
-  project_id   = local.project_id
+  project      = local.project
   vpc_cidr     = var.vpc_cidr
   environment  = local.environment
   region       = var.region
@@ -20,8 +19,7 @@ module "network" {
 # # ---------------------------------------------------------------------------------------------------------------------#
 module "loadbalancer" {
   source           = "./modules/loadbalancer"
-  project_name     = local.project_name
-  project_id       = local.project_id
+  project          = local.project
   environment      = local.environment
   region           = var.region
   vpc_uuid         = module.network.vpc_uuid
@@ -34,8 +32,7 @@ module "loadbalancer" {
 # # ---------------------------------------------------------------------------------------------------------------------#
 module "manager" {
   source          = "./modules/manager"
-  project_name    = local.project_name
-  project_id      = local.project_id
+  project         = local.project
   environment     = local.environment
   vpc_uuid        = module.network.vpc_uuid
   vpc_cidr        = var.vpc_cidr
@@ -63,8 +60,7 @@ module "manager" {
 module "services" {
   source          = "./modules/services"
   services        = var.services
-  project_name    = local.project_name
-  project_id      = local.project_id
+  project         = local.project
   environment     = local.environment
   image           = var.default_image
   region          = var.region
@@ -90,8 +86,7 @@ module "services" {
 # # ---------------------------------------------------------------------------------------------------------------------#
 module "frontend" {
   source          = "./modules/frontend"
-  project_name    = local.project_name
-  project_id      = local.project_id
+  project         = local.project
   environment     = local.environment
   image           = var.default_image
   region          = var.region
