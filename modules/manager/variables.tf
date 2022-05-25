@@ -16,11 +16,6 @@ variable "project" {
 })
 }
 
-variable "environment" {
-  description  = "Environment selected to deploy this configuration to"
-  type         = string
-}
-
 variable "image" {
   description = "Default image name to build droplet from"
   type        = string
