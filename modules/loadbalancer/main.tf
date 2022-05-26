@@ -30,7 +30,7 @@ resource "digitalocean_loadbalancer" "this" {
   
   forwarding_rule {
     entry_port     = 443
-    entry_protocol = "https"
+    entry_protocol = "http2"
 
     target_port     = 80
     target_protocol = "http"
