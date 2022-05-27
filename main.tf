@@ -23,6 +23,7 @@ module "loadbalancer" {
   vpc_uuid         = module.network.vpc_uuid
   size             = var.loadbalancer.size
   algorithm        = "round_robin"
+  alert_email      = var.alert_email
 }
 
 # # ---------------------------------------------------------------------------------------------------------------------#
