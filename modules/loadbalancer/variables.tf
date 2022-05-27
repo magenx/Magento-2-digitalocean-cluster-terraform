@@ -36,3 +36,8 @@ variable "algorithm" {
   type         = string
 }
 
+variable "alert_email" {
+  description  = "Send monitoring alerts to this email"
+  type         = string
+}
+
