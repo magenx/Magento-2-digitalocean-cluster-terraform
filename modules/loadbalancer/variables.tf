@@ -41,3 +41,8 @@ variable "alert_email" {
   type         = string
 }
 
+variable "domain" {
+  description  = "Domain name per environment for this project"
+  type         = string
+}
+
