@@ -57,7 +57,7 @@ fi
 
 echo
 echo "[!][INFO]: Running terraform plan to ${workspace}.plan.out"
-terraform plan -out ${workspace}.plan.out -no-color
+terraform plan -out ${workspace}.plan.out -no-color | tee ${workspace}.plan.out.txt
 
 
 if  [ $? -eq 0 ]; then
