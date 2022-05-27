@@ -24,6 +24,7 @@ module "loadbalancer" {
   size             = var.loadbalancer.size
   algorithm        = "round_robin"
   alert_email      = var.alert_email
+  doamin           = local.domain
 }
 
 # # ---------------------------------------------------------------------------------------------------------------------#
@@ -45,7 +46,7 @@ module "manager" {
   admin_ssh_key   = local.admin_ssh_key
   manager_ssh_key = local.manager_ssh_key
   timezone        = var.timezone
-  domain          = module.loadbalancer.domain
+  domain          = local.domain
   frontend_ip     = module.frontend.private_ip
   alert_email     = var.alert_email
   services_ids    = module.services.services_ids
@@ -71,7 +72,7 @@ module "services" {
   admin_ssh_key   = local.admin_ssh_key
   manager_ssh_key = local.manager_ssh_key
   ## app variables
-  domain           = module.loadbalancer.domain
+  domain           = local.domain
   brand            = var.brand
   elk_version      = var.elk_version
   mariadb_version  = var.mariadb_version
@@ -101,7 +102,7 @@ module "frontend" {
   php_version     = var.php_version
   php_packages    = var.php_packages
   varnish_version = var.varnish_version
-  domain          = module.loadbalancer.domain
+  domain          = local.domain
   media_ip        = module.services.media_ip
   brand           = var.brand
   packer          = var.packer
