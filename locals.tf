@@ -11,4 +11,5 @@ locals {
   
   packer_snapshot = "packer-builder-frontend"
   
+  domain          = var.domains[local.environment]
 }
