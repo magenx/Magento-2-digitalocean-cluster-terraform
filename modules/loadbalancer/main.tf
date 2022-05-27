@@ -7,9 +7,9 @@
 # Create certificate for load balancer
 # # ---------------------------------------------------------------------------------------------------------------------#
 resource "digitalocean_certificate" "this" {
-  name    = "${var.project.name}-${local.domain}"
+  name    = "${var.project.name}-${var.domain}"
   type    = "lets_encrypt"
-  domains = [local.domain]
+  domains = [var.domain]
 
   lifecycle {
     create_before_destroy = true
