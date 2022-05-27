@@ -24,7 +24,7 @@ module "loadbalancer" {
   size             = var.loadbalancer.size
   algorithm        = "round_robin"
   alert_email      = var.alert_email
-  doamin           = local.domain
+  domain           = local.domain
 }
 
 # # ---------------------------------------------------------------------------------------------------------------------#
