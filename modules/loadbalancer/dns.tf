@@ -7,7 +7,7 @@
 # Create certificate for load balancer
 # # ---------------------------------------------------------------------------------------------------------------------#
 resource "digitalocean_domain" "this" {
-  name = local.domain
+  name = var.domain
 }
 # # ---------------------------------------------------------------------------------------------------------------------#
 # Add an A record to the domain www
@@ -38,7 +38,7 @@ resource "digitalocean_record" "mx" {
   name     = "@"
   priority = 10
   ttl      = 300
-  value    = "mail.${local.domain}."
+  value    = "mail.${var.domain}."
 }
 
 
