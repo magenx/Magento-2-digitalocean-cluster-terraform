@@ -15,6 +15,15 @@ variable "vpc_cidr" {
   default = "10.35.0.0/16"
 }
 
+variable "domain" {
+  description  = "Domains map per environment"
+  default      = {
+    production  = "magenx.org"
+    development = "magenx.net"
+    staging     = "magenx.eu"
+  }
+}
+
 variable "alert_email" {
   description  = "Send monitoring alerts to this email"
   default = "alert@magenx.com"
