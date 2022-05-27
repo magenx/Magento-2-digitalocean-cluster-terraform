@@ -15,7 +15,7 @@ variable "vpc_cidr" {
   default = "10.35.0.0/16"
 }
 
-variable "domain" {
+variable "domains" {
   description  = "Domains map per environment"
   default      = {
     production  = "magenx.org"
