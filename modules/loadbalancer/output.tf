@@ -34,7 +34,3 @@ output "certificate_expire" {
   value       = digitalocean_certificate.this.not_after
 }
 
-output "domain" {
-  description = "certificate expiry date"
-  value       = local.domain
-}
