@@ -61,16 +61,6 @@ variable "droplet_agent" {
   type        = bool
 }
 
-variable "ssh_port" {
-  description = "Custom ssh port to change"
-  type        = string
-}
-
-variable "ssh_config_host" {
-  description = "CIDR regex for ssh config host"
-  type        = string
-}
-
 variable "manager_ssh_key" {
   description = "Public ssh key for manager user"
   type        = map
