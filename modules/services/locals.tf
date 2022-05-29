@@ -7,13 +7,6 @@ locals {
     MANAGER_SSH_KEY = var.manager_ssh_key.public_key
   }
 )
-  ## cloudinit ssh config template
-  ssh_config        = templatefile("${path.module}/user_data/ssh_config.yml", 
-  {
-    SSH_PORT        = var.ssh_port
-    SSH_CONFIG_HOST = var.ssh_config_host
-  }
-)
   
   cloudinit_for_service = {
     ## cloudinit media configuration template
@@ -54,7 +47,7 @@ locals {
       {}
     )
     ## cloudinit cache configuration template
-    session                 = templatefile("${path.module}/user_data/session.yml",
+    session               = templatefile("${path.module}/user_data/session.yml",
       {}
     )
   }
