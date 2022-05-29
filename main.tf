@@ -41,7 +41,6 @@ module "manager" {
   monitoring      = var.monitoring
   backups         = var.backups
   droplet_agent   = var.droplet_agent
-  ssh_config_host = local.ssh_config_host
   admin_ssh_key   = local.admin_ssh_key
   manager_ssh_key = local.manager_ssh_key
   timezone        = var.timezone
@@ -66,7 +65,6 @@ module "services" {
   vpc_uuid        = module.network.vpc_uuid
   vpc_cidr        = var.vpc_cidr
   droplet_agent   = var.droplet_agent
-  ssh_config_host = local.ssh_config_host
   admin_ssh_key   = local.admin_ssh_key
   manager_ssh_key = local.manager_ssh_key
   ## app variables
@@ -92,7 +90,6 @@ module "frontend" {
   vpc_uuid        = module.network.vpc_uuid
   vpc_cidr        = var.vpc_cidr
   droplet_agent   = var.droplet_agent
-  ssh_config_host = local.ssh_config_host
   admin_ssh_key   = local.admin_ssh_key
   manager_ssh_key = local.manager_ssh_key
   timezone        = var.timezone
