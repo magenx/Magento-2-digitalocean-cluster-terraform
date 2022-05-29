@@ -25,7 +25,6 @@ resource "digitalocean_droplet" "frontend" {
       ADMIN_SSH_KEY       = var.admin_ssh_key.public_key
       MANAGER_SSH_KEY     = var.manager_ssh_key.public_key
       TIMEZONE            = var.timezone
-      SSH_PORT            = var.ssh_port
     }
   )
 }
