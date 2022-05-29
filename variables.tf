@@ -131,7 +131,7 @@ variable "elk_version" {
 
 variable "mariadb_version" {
   description = "MariaDB version to use"
-  default     = "10.5.12"
+  default     = "10.5.16"
 }
 
 variable "rabbitmq_version" {
