@@ -19,8 +19,6 @@ resource "digitalocean_droplet" "manager" {
   tags          = [digitalocean_tag.manager.id]
   user_data     = templatefile("${path.module}/user_data/manager.yml", 
     { 
-      SSH_PORT         = var.ssh_port
-      SSH_CONFIG_HOST  = var.ssh_config_host
       MANAGER_SSH_KEY  = var.manager_ssh_key.public_key
       ADMIN_SSH_KEY    = var.admin_ssh_key.public_key
       VPC_CIDR         = var.vpc_cidr
