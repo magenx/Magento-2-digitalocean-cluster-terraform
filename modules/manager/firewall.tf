@@ -13,7 +13,7 @@ resource "digitalocean_firewall" "manager" {
 
   inbound_rule {
     protocol         = "tcp"
-    port_range       = var.ssh_port
+    port_range       = "22"
     source_addresses = ["0.0.0.0/0", "::/0"]
   }
 
