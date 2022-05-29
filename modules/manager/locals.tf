@@ -16,7 +16,6 @@ locals {
         PROJECT     = var.project.name
         ALERT_EMAIL = var.alert_email
         USER_DATA   = local.user_data
-        SSH_PORT    = var.ssh_port
         SSH_KEYS    = "[var.admin_ssh_key.id,var.manager_ssh_key.id]"
         VPC_UUID    = var.vpc_uuid
         FRONTEND_IP = var.frontend_ip
