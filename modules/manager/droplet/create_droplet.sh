@@ -58,7 +58,7 @@ _TIME_AFTER_API="$(date -R)"
 _NEW_DROPLET_PRIVATE_IP=$${_NEW_DROPLET_DATA##* }
 
 ## wait for ssh connection to new droplet
-timeout 60 sh -c 'until nc -z $0 $1; do sleep 1; done' $${_NEW_DROPLET_PRIVATE_IP} ${SSH_PORT} &> /dev/null && _TIME_SSH_CONTACT="$(date -R)" || exit 1
+timeout 60 sh -c 'until nc -z $0 $1; do sleep 1; done' $${_NEW_DROPLET_PRIVATE_IP} 22 &> /dev/null && _TIME_SSH_CONTACT="$(date -R)" || exit 1
 
 ## wait for connection to nginx
 timeout 60 sh -c 'until nc -z $0 $1; do sleep 1; done' $${_NEW_DROPLET_PRIVATE_IP} 80 &> /dev/null && _TIME_NGINX_CONTACT="$(date -R)" || exit 1
