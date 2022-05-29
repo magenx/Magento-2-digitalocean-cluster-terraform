@@ -2,6 +2,8 @@
 if [[ -e "this.init.lock" ]]; then
   echo
   echo "[!][ERROR]: Lock exists"
+  echo
+  echo "Terraform workspace available:"
   terraform workspace list
   echo
   exit 1
