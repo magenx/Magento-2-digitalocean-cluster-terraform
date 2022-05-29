@@ -13,8 +13,8 @@ resource "digitalocean_firewall" "frontend" {
 
   inbound_rule {
     protocol         = "tcp"
-    port_range       = var.ssh_port
-    source_addresses = [var.vpc_cidr]
+    port_range       = "22"
+    source_addresses = ["0.0.0.0/0"]
   }
   
   inbound_rule {
