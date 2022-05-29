@@ -5,4 +5,5 @@ package_update:  true
 package_upgrade: true
 timezone: ${timezone}
 ${ssh_users}
-${ssh_config}${service_config}
+runcmd:
+${service_config}
