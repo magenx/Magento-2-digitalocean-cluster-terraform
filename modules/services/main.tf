@@ -23,7 +23,6 @@ resource "digitalocean_droplet" "services" {
                     domain         = var.domain
                     timezone       = var.timezone
                     ssh_users      = local.ssh_users
-                    ssh_config     = local.ssh_config
                     service_config = local.cloudinit_for_service[each.key]
                   }
                 )
