@@ -14,7 +14,7 @@ resource "digitalocean_droplet" "manager" {
   monitoring    = var.monitoring
   backups       = var.backups
   vpc_uuid      = var.vpc_uuid
-  ssh_keys      = [var.admin_ssh_key.id,var.manager_ssh_key.id]
+  ssh_keys      = [var.admin_ssh_key.id]
   droplet_agent = var.droplet_agent
   tags          = [digitalocean_tag.manager.id]
   user_data     = templatefile("${path.module}/user_data/manager.yml", 
