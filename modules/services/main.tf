@@ -16,7 +16,7 @@ resource "digitalocean_droplet" "services" {
   backups       = var.backups
   vpc_uuid      = var.vpc_uuid
   droplet_agent = var.droplet_agent
-  ssh_keys      = [var.admin_ssh_key.id,var.manager_ssh_key.id]
+  ssh_keys      = [var.admin_ssh_key.id]
   tags          = [digitalocean_tag.services[each.key].id]
   user_data     = templatefile("${path.module}/user_data/template.yml", {
                     service        = each.key
