@@ -12,7 +12,6 @@ resource "digitalocean_droplet" "services" {
   name          = "${var.project.name}-${each.key}"
   region        = var.region
   size          = each.value.size
-  resize_disk   = each.value.resize_disk
   monitoring    = var.monitoring
   backups       = var.backups
   vpc_uuid      = var.vpc_uuid
