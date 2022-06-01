@@ -54,7 +54,7 @@ variable "services" {
       port = "9200"
     }
     database      = {
-      size = "s-2vcpu-2gb-intel"
+      size = "s-1vcpu-2gb-intel"
       port = "3306"
     }
     rabbitmq      = {
