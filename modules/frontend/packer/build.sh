@@ -43,7 +43,7 @@ apt-get -qq update -o Dir::Etc::sourcelist="sources.list.d/nginx.list" -o Dir::E
 apt-get -qq update -o Dir::Etc::sourcelist="sources.list.d/php.list" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0"
 apt-get -qq update -o Dir::Etc::sourcelist="sources.list.d/varnishcache_varnish${VARNISH_VERSION}.list" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0"
 
-apt-get -qqy install varnish nginx php-pear php${PHP_VERSION} ${_PHP_PACKAGES[@]/#/php${PHP_VERSION}-}
+apt-get -qqy install varnish nginx nginx-module-perl nginx-module-image-filter nginx-module-geoip php-pear php${PHP_VERSION} ${_PHP_PACKAGES[@]/#/php${PHP_VERSION}-}
 
 setfacl -R -m u:nginx:r-X,d:u:nginx:r-X ${WEB_ROOT_PATH}
 
