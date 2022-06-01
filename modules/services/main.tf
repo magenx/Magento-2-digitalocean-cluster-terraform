@@ -7,7 +7,6 @@
 # Create droplet for services
 # # ---------------------------------------------------------------------------------------------------------------------#
 resource "digitalocean_droplet" "services" {
-  depends_on    = [digitalocean_volume.media]
   for_each      = var.services
   image         = var.image
   name          = "${var.project.name}-${each.key}"
@@ -19,6 +18,7 @@ resource "digitalocean_droplet" "services" {
   droplet_agent = var.droplet_agent
   ssh_keys      = [var.admin_ssh_key.id]
   tags          = [digitalocean_tag.services[each.key].id]
+  volume_ids    = each.key == "media" ? [digitalocean_volume.media.id] : null
   user_data     = templatefile("${path.module}/user_data/template.yml", {
                     service        = each.key
                     domain         = var.domain
