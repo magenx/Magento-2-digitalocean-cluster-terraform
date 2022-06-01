@@ -6,6 +6,7 @@ export _PRIVATE_IP=$(curl -s http://169.254.169.254/metadata/v1/interfaces/priva
 
 ## installation
 apt-get update
+apt-get -qy upgrade
 apt-get -qqy install nfs-common curl unzip git patch python3-pip acl attr imagemagick snmp
 
 ## create user
