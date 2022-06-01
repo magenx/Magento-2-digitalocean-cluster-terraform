@@ -172,6 +172,7 @@ END
 ## varnish configuration
 uuidgen > /etc/varnish/secret
 cp /etc/varnish/varnish.service /etc/systemd/system/
+systemctl daemon-reload
 
 ## nginx configuration
 wget -qO /etc/nginx/fastcgi_params  ${_MAGENX_NGINX_REPO}magento2/fastcgi_params
