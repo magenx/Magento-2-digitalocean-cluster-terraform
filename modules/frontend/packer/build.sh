@@ -173,15 +173,15 @@ END
 uuidgen > /etc/varnish/secret
 
 ## nginx configuration
-wget -qO /etc/nginx/fastcgi_params  $${_MAGENX_NGINX_REPO}magento2/fastcgi_params
-wget -qO /etc/nginx/nginx.conf  $${_MAGENX_NGINX_REPO}magento2/nginx.conf
+wget -qO /etc/nginx/fastcgi_params  ${_MAGENX_NGINX_REPO}magento2/fastcgi_params
+wget -qO /etc/nginx/nginx.conf  ${_MAGENX_NGINX_REPO}magento2/nginx.conf
 mkdir -p /etc/nginx/sites-enabled
 mkdir -p /etc/nginx/sites-available && cd $_
-curl -s $${_MAGENX_NGINX_REPO_API}/sites-available 2>&1 | awk -F'"' '/download_url/ {print $4 ; system("curl -sO "$4)}' >/dev/null
+curl -s ${_MAGENX_NGINX_REPO_API}/sites-available 2>&1 | awk -F'"' '/download_url/ {print $4 ; system("curl -sO "$4)}' >/dev/null
 ln -s /etc/nginx/sites-available/magento2.conf /etc/nginx/sites-enabled/magento2.conf
 ln -s /etc/nginx/sites-available/default.conf /etc/nginx/sites-enabled/default.conf
 mkdir -p /etc/nginx/conf_m2 && cd /etc/nginx/conf_m2/
-curl -s $${_MAGENX_NGINX_REPO_API}/conf_m2 2>&1 | awk -F'"' '/download_url/ {print $4 ; system("curl -sO "$4)}' >/dev/null
+curl -s ${_MAGENX_NGINX_REPO_API}/conf_m2 2>&1 | awk -F'"' '/download_url/ {print $4 ; system("curl -sO "$4)}' >/dev/null
 
 sed -i "s/example.com/${DOMAIN}/g" /etc/nginx/sites-available/magento2.conf
 sed -i "s/example.com/${DOMAIN}/g" /etc/nginx/nginx.conf
