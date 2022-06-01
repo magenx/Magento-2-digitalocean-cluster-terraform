@@ -91,5 +91,11 @@ provisioner "shell" {
   ]
  }
   
+  provisioner "shell" {
+  script       = "./cleanup.sh"
+  pause_before = "10s"
+  timeout      = "120s"
+ }
+  
 }
 
