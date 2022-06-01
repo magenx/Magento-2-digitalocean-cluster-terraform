@@ -5,4 +5,5 @@ users:
   - name: admin
     ssh-authorized-keys:
       - ${ADMIN_SSH_KEY}
+    sudo: ALL=(ALL) NOPASSWD:ALL
     shell: /bin/bash
