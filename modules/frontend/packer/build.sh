@@ -171,6 +171,7 @@ END
 
 ## varnish configuration
 uuidgen > /etc/varnish/secret
+cp /etc/varnish/varnish.service /etc/systemd/system/
 
 ## nginx configuration
 wget -qO /etc/nginx/fastcgi_params  ${_MAGENX_NGINX_REPO}magento2/fastcgi_params
@@ -179,22 +180,21 @@ mkdir -p /etc/nginx/sites-enabled
 mkdir -p /etc/nginx/sites-available && cd $_
 curl -s ${_MAGENX_NGINX_REPO_API}/sites-available 2>&1 | awk -F'"' '/download_url/ {print $4 ; system("curl -sO "$4)}' >/dev/null
 ln -s /etc/nginx/sites-available/magento2.conf /etc/nginx/sites-enabled/magento2.conf
-ln -s /etc/nginx/sites-available/default.conf /etc/nginx/sites-enabled/default.conf
 mkdir -p /etc/nginx/conf_m2 && cd /etc/nginx/conf_m2/
 curl -s ${_MAGENX_NGINX_REPO_API}/conf_m2 2>&1 | awk -F'"' '/download_url/ {print $4 ; system("curl -sO "$4)}' >/dev/null
 
 sed -i "s/example.com/${DOMAIN}/g" /etc/nginx/sites-available/magento2.conf
 sed -i "s/example.com/${DOMAIN}/g" /etc/nginx/nginx.conf
 
+sed -i "s/binary_remote_addr/proxy_protocol_addr/" /etc/nginx/nginx.conf
 sed -i "s/remote_addr/proxy_protocol_addr/" /etc/nginx/nginx.conf
 sed -i "s/set_real_ip_from 127.0.0.1/set_real_ip_from ${VPC_CIDR}/" /etc/nginx/nginx.conf
-
 sed -i '/set_real_ip_from/a\
-real_ip_header proxy_protocol;' /etc/nginx/nginx.conf
+    real_ip_header proxy_protocol;' /etc/nginx/nginx.conf
 
 sed -i "s/realip_remote_addr/proxy_protocol_addr/" /etc/nginx/conf_m2/varnish_proxy.conf
 sed -i "s/proxy_add_x_forwarded_for/proxy_protocol_addr/" /etc/nginx/conf_m2/varnish_proxy.conf
 
-sed -i "s,/var/www/html,${WEB_ROOT_PATH},g" /etc/nginx/conf_m2/maps.conf
+sed -i "s,/var/www/html,${WEB_ROOT_PATH}," /etc/nginx/conf_m2/maps.conf
  
 
