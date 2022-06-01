@@ -29,7 +29,8 @@ users:
       - ${MANAGER_SSH_KEY}
     sudo: ALL=(ALL) NOPASSWD:ALL
     shell: /bin/bash
-
+    
+write_files:
 - path: /opt/manager/droplet/create_droplet.sh
   owner: 'manager:manager'
   permissions: '0640'
