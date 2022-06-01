@@ -6,7 +6,7 @@ export _PRIVATE_IP=$(curl -s http://169.254.169.254/metadata/v1/interfaces/priva
 
 ## installation
 apt-get update
-apt-get -qqy install nfs-common unzip git patch python3-pip acl attr imagemagick snmp
+apt-get -qqy install nfs-common curl unzip git patch python3-pip acl attr imagemagick snmp
 
 ## create user
 useradd -d /home/${BRAND} -s /sbin/nologin ${BRAND}
@@ -190,8 +190,7 @@ sed -i "s/remote_addr/proxy_protocol_addr/" /etc/nginx/nginx.conf
 sed -i "s/set_real_ip_from 127.0.0.1/set_real_ip_from ${VPC_CIDR}/" /etc/nginx/nginx.conf
 
 sed -i '/set_real_ip_from/a\
-real_ip_header proxy_protocol; \
-' /etc/nginx/nginx.conf
+real_ip_header proxy_protocol;' /etc/nginx/nginx.conf
 
 sed -i "s/realip_remote_addr/proxy_protocol_addr/" /etc/nginx/conf_m2/varnish_proxy.conf
 sed -i "s/proxy_add_x_forwarded_for/proxy_protocol_addr/" /etc/nginx/conf_m2/varnish_proxy.conf
