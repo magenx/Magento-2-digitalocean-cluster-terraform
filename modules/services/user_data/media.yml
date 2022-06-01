@@ -6,6 +6,7 @@
   - usermod -g ${PHP_USER} ${BRAND}
   - mkdir -p ${WEB_ROOT_PATH}/pub/media
   - mkdir -p ${WEB_ROOT_PATH}/var
+  - mount -a
   - chown -R ${BRAND}:${PHP_USER} ${WEB_ROOT_PATH}/
   - chmod 2770 ${WEB_ROOT_PATH}/pub/media
   - chmod 2770 ${WEB_ROOT_PATH}/var
@@ -13,4 +14,3 @@
   - echo "${WEB_ROOT_PATH}/var    ${VPC_CIDR}(rw,sync,no_root_squash,no_subtree_check)" >> /etc/exports
   - exports -ra
   - systemctl restart nfs-server
-  - mount -a
