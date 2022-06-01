@@ -48,7 +48,7 @@ variable "size" {
 
 variable "resize_disk" {
   description = "Disable or enable disk resize"
-  type        = string
+  type        = bool
 }
 
 variable "monitoring" {
