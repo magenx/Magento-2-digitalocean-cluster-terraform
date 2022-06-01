@@ -7,6 +7,7 @@
 # Create droplet for services
 # # ---------------------------------------------------------------------------------------------------------------------#
 resource "digitalocean_droplet" "services" {
+  depends_on    = [digitalocean_volume.media]
   for_each      = var.services
   image         = var.image
   name          = "${var.project.name}-${each.key}"
