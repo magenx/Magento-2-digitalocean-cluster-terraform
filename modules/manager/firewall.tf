@@ -40,6 +40,12 @@ resource "digitalocean_firewall" "manager" {
     port_range       = "443"
     destination_addresses = ["0.0.0.0/0", "::/0"]
   }
+  
+  outbound_rule {
+    protocol         = "udp"
+    port_range       = "53"
+    destination_addresses = ["67.207.67.2","67.207.67.3"]
+  }
 }
 # # ---------------------------------------------------------------------------------------------------------------------#
 # Create tag for manager firewall
