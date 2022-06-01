@@ -85,6 +85,7 @@ module "frontend" {
   image           = var.default_image
   region          = var.region
   size            = var.frontend.size
+  resize_disk     = var.resize_disk
   monitoring      = var.monitoring
   backups         = var.backups
   vpc_uuid        = module.network.vpc_uuid
