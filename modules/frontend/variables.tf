@@ -46,6 +46,11 @@ variable "size" {
   type        = string
 }
 
+variable "resize_disk" {
+  description = "Disable or enable disk resize"
+  type        = string
+}
+
 variable "monitoring" {
   description = "Enable monitoring for droplet"
   type        = bool
