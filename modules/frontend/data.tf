@@ -27,7 +27,7 @@ data "digitalocean_images" "packer" {
   }  
   filter {
     key      = "name"
-    values   = [var.packer.snapshot]
+    values   = [${var.packer.snapshot}-${var.project.name}]
     match_by = "re"
   }
   sort {
