@@ -77,6 +77,11 @@ variable "services" {
   }
 }
 
+variable "resize_disk" {
+  description = "Disable or enable disk resize"
+  default     = false
+}
+
 variable "packer" {
   description = "The size slug of packer build droplet"
   default      = {
