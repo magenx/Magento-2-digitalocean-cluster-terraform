@@ -45,13 +45,6 @@ resource "digitalocean_volume" "media" {
   description             = "Volume for media droplet @ ${var.project.name}"
 }
 # # ---------------------------------------------------------------------------------------------------------------------#
-# Attach volume to media droplet
-# # ---------------------------------------------------------------------------------------------------------------------#
-resource "digitalocean_volume_attachment" "media" {
-  droplet_id = digitalocean_droplet.services["media"].id
-  volume_id  = digitalocean_volume.media.id
-}
-# # ---------------------------------------------------------------------------------------------------------------------#
 # Assign services droplets with volume to this project
 # # ---------------------------------------------------------------------------------------------------------------------#
 resource "digitalocean_project_resources" "services" {
