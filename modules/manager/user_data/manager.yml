@@ -52,4 +52,5 @@ runcmd:
  - tar xf doctl-$${DOCTL_VERSION}-linux-amd64.tar.gz
  - rm doctl-$${DOCTL_VERSION}-linux-amd64.tar.gz
  - chmod 700 doctl
+ - chmod 711 /home/admin
   
