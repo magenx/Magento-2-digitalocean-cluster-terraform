@@ -1,8 +1,8 @@
   - apt-get update
   - apt-get install -y wget unzip iptables nfs-kernel-server acl attr snmp rsync jpegoptim webp ipset
   - echo "/dev/disk/by-id/scsi-0DO_Volume_${VOLUME_NAME} ${WEB_ROOT_PATH}/pub/media ext4 defaults,nofail,discard 0 0" >> /etc/fstab
-  - useradd -d ${WEB_ROOT_PATH%/*} -s /bin/bash ${BRAND}
-  - useradd -M -s /sbin/nologin -d ${WEB_ROOT_PATH%/*} ${PHP_USER}
+  - useradd -d /home/${BRAND} -s /bin/bash ${BRAND}
+  - useradd -M -s /sbin/nologin -d /home/${BRAND} ${PHP_USER}
   - usermod -g ${PHP_USER} ${BRAND}
   - mkdir -p ${WEB_ROOT_PATH}/pub/media
   - mkdir -p ${WEB_ROOT_PATH}/var
