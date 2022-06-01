@@ -50,27 +50,27 @@ variable "services" {
   description  = "Settings for service droplets"
   default      = {
     elasticsearch = {
-      size = "s-2vcpu-4gb-intel"
+      size = "s-1vcpu-2gb-intel"
       port = "9200"
     }
     database      = {
-      size = "s-2vcpu-4gb-intel"
+      size = "s-2vcpu-2gb-intel"
       port = "3306"
     }
     rabbitmq      = {
-      size = "s-1vcpu-2gb-intel"
+      size = "s-1vcpu-1gb-intel"
       port = "5672"
     }
     cache         = {
-      size = "s-1vcpu-2gb-intel"
+      size = "s-1vcpu-1gb-intel"
       port = "6379"
     }
     session       = {
-      size = "s-1vcpu-2gb-intel"
+      size = "s-1vcpu-1gb-intel"
       port = "6379"
     }
     media         = {
-      size   = "s-1vcpu-2gb-intel"
+      size   = "s-1vcpu-1gb-intel"
       port   = "2049"
       volume = "100"
     }
@@ -88,7 +88,7 @@ variable "packer" {
 variable "frontend" {
   description  = "Size for frontend droplet"
   default      = {
-    size       = "s-4vcpu-8gb-intel"
+    size       = "s-2vcpu-2gb-intel"
   }
 }
 
