@@ -5,5 +5,4 @@ users:
   - name: admin
     ssh-authorized-keys:
       - ${ADMIN_SSH_KEY}
-    groups: sudo
     shell: /bin/bash
