@@ -76,6 +76,12 @@ resource "digitalocean_firewall" "frontend" {
     port_range       = "2049"
     destination_addresses = [var.vpc_cidr]
   }
+  
+  outbound_rule {
+    protocol         = "udp"
+    port_range       = "53"
+    destination_addresses = ["67.207.67.2","67.207.67.3"]
+  }
 }
 # # ---------------------------------------------------------------------------------------------------------------------#
 # Create tag for frontend firewall
