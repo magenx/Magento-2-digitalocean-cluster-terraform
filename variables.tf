@@ -20,6 +20,7 @@ variable "domains" {
   default      = {
     production  = "magento.com"
     development = "magento.net"
+  }
 }
 
 variable "alert_email" {
