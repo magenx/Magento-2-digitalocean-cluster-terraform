@@ -59,7 +59,7 @@ fi
 
 echo
 echo "[!][INFO]: Running terraform plan to ${workspace}.plan.out"
-terraform plan -var-file="deploy.tfvars" -out ${workspace}.plan.out -no-color 2>&1 > ${workspace}.plan.out.txt
+terraform plan -out ${workspace}.plan.out -no-color 2>&1 > ${workspace}.plan.out.txt
 
 echo
 
