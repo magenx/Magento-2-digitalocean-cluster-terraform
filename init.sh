@@ -59,8 +59,9 @@ fi
 
 echo
 echo "[!][INFO]: Running terraform plan to ${workspace}.plan.out"
-terraform plan -out ${workspace}.plan.out -no-color | tee ${workspace}.plan.out.txt
+terraform plan -var-file="deploy.tfvars" -out ${workspace}.plan.out -no-color 2>&1 > ${workspace}.plan.out.txt
 
+echo
 
 if  [ $? -eq 0 ]; then
     echo
