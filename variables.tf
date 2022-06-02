@@ -16,7 +16,7 @@ variable "vpc_cidr" {
 }
 
 variable "domains" {
-  description  = "Domains map per environment production | staging"
+  description  = "Domains map per environment production | development"
   type         = map
 }
 
