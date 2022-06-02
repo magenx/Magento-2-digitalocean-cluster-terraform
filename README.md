@@ -35,7 +35,7 @@ Create working directory:
 Using git clone download terraform configuration:  
 `git clone https://github.com/magenx/Magento-2-digitalocean-cluster-terraform .`  
   
-For ssl certificate configuration add domains and email to `deploy.auto.tfvars`   
+For ssl certificate configuration add domains and email   
 Point your domains to [DigitalOcean DNS](https://docs.digitalocean.com/tutorials/dns-registrars/)  
 
 Add ssh keys to digitalocean for `admin` and `manager` users.  
