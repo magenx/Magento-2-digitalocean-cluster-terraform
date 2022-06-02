@@ -17,17 +17,19 @@ variable "vpc_cidr" {
 
 variable "domains" {
   description  = "Domains map per environment production | development"
-  type         = map
+  default      = {
+    production  = "magento.com"
+    development = "magento.net"
 }
 
 variable "alert_email" {
   description  = "Send monitoring alerts to this email"
-  type         = string
+  default      = "alert@magento.com"
 }
 
 variable "admin_email" {
   description  = "Send magento related messages to this email"
-  type         = string
+  default      = "admin@magento.com"
 }
 
 variable "default_image" {
