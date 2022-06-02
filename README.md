@@ -44,3 +44,5 @@ Update configuration variables according to your project requirements.
 To simplify configuration initialization and lower chances to damage your environment with typos, run init script:
 `bash init.sh`
 
+## Get $100 in credit over 60 days.
+[![DigitalOcean Referral Badge](https://web-platforms.sfo2.digitaloceanspaces.com/WWW/Badge%203.svg)](https://www.digitalocean.com/?refcode=ccc5d115377f&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge)
