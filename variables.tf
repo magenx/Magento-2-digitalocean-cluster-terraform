@@ -17,7 +17,10 @@ variable "vpc_cidr" {
 
 variable "domains" {
   description  = "Domains map per environment"
-  type         = map
+  default      = {
+    production  = ""
+    development = ""
+  }
 }
 
 variable "alert_email" {
