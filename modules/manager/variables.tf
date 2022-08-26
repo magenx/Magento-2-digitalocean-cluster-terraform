@@ -76,11 +76,6 @@ variable "domain" {
   type        = string
 }
 
-variable "frontend_ip" {
-  description = "IP address of frontend droplet"
-  type        = string
-}
-
 variable "alert_email" {
   description  = "Send monitoring alerts to this email"
   type         = string
@@ -91,7 +86,3 @@ variable "services_ids" {
   type         = list
 }
 
-variable "frontend_id" {
-  description  = "Frontend droplet id"
-  type         = string
-}
