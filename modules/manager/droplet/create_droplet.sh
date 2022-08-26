@@ -1,6 +1,7 @@
 #!/bin/bash
 
 _NEW_DROPLET_TAG="php-backend"
+_FRONTEND_IP=$(doctl compute droplet list --tag-name $${_NEW_DROPLET_TAG} --format PrivateIPv4,Status --no-header | head -1)
 
 _CREATE_NEW_DROPLET () {
 _NEW_DROPLET_DATA=$(doctl compute droplet create $${_NEW_DROPLET_TAG}-$${RANDOM}-${PROJECT} \
@@ -17,8 +18,8 @@ _NEW_DROPLET_DATA=$(doctl compute droplet create $${_NEW_DROPLET_TAG}-$${RANDOM}
  }
 
 ## wait for connection first | if timeout then scale out
-timeout 10 sh -c 'until nc -z $0 $1; do sleep 1; done' ${FRONTEND_IP} 80
-if [ $? -eq 124 ] ; then
+timeout 10 sh -c 'until nc -z $0 $1; do sleep 1; done' $${_FRONTEND_IP% *} 80
+if [ $? -eq 124 ] || [ -z "$${_FRONTEND_IP% *}" ]; then
 # Create droplet now
  _TIME_BEFORE_API="$(date -R)"
  
@@ -28,10 +29,10 @@ else
 
 ## connection ok | check frontend droplet load average 
 # Get CPU qty from frontend droplet 
-_FRONTEND_DROPLET_CPU=$(ssh manager@${FRONTEND_IP} "nproc")
+_FRONTEND_DROPLET_CPU=$(ssh manager@$${_FRONTEND_IP% *} "nproc")
 # Calculate droplet average load 5min
-_FRONTEND_DROPLET_LOAD_5=$(ssh manager@${FRONTEND_IP} "cat /proc/loadavg | awk '{print $1}'")
-_FRONTEND_DROPLET_LOAD_AVERAGE_5=$(ssh manager@${FRONTEND_IP} "($(echo $${_FRONTEND_DROPLET_LOAD_5} | awk '{print 100 * $1}') / $${_FRONTEND_DROPLET_CPU})")
+_FRONTEND_DROPLET_LOAD_5=$(ssh manager@$${_FRONTEND_IP% *} "cat /proc/loadavg | awk '{print $1}'")
+_FRONTEND_DROPLET_LOAD_AVERAGE_5=$(ssh manager@$${_FRONTEND_IP% *} "($(echo $${_FRONTEND_DROPLET_LOAD_5} | awk '{print 100 * $1}') / $${_FRONTEND_DROPLET_CPU})")
 
 # If droplet average 5min load >% then create new droplet
 if [ $${_FRONTEND_DROPLET_LOAD_AVERAGE_5} -ge 80 ] ; then
@@ -70,7 +71,7 @@ _NEW_DROPLET_UPTIME=$(ssh manager@$${_NEW_DROPLET_PRIVATE_IP} "uptime -s;uptime 
 
 ## generate report log
 cat > /tmp/droplet_create_report.txt <<END
-Master droplet status: $(ssh manager@${FRONTEND_IP} "$(uptime)")
+Master droplet status: $(ssh manager@$${_FRONTEND_IP% *} "$(uptime)")
 New droplet created: $${_NEW_DROPLET_DATA} - "$${_NEW_DROPLET_UPTIME}"
 Command to create droplet sent: $${_TIME_BEFORE_API}
 IP address registration:        $${_TIME_AFTER_API}
