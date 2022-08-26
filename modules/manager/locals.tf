@@ -18,7 +18,6 @@ locals {
         USER_DATA   = local.user_data
         SSH_KEYS    = "[var.admin_ssh_key.id,var.manager_ssh_key.id]"
         VPC_UUID    = var.vpc_uuid
-        FRONTEND_IP = var.frontend_ip
       }
     )
     ## cloudinit delete droplet configuration template
