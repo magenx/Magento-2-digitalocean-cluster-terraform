@@ -45,10 +45,8 @@ module "manager" {
   manager_ssh_key = local.manager_ssh_key
   timezone        = var.timezone
   domain          = local.domain
-  frontend_ip     = module.frontend.private_ip
   alert_email     = var.alert_email
   services_ids    = module.services.services_ids
-  frontend_id     = module.frontend.frontend_id
 }
   
 # # ---------------------------------------------------------------------------------------------------------------------#
