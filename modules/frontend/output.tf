@@ -4,7 +4,7 @@ output "frontend_id" {
   value       = digitalocean_droplet.frontend.id
 }
 
-output "private_ip" {
+output "frontend_ip" {
   description = "frontend private ip address"
   value       = digitalocean_droplet.frontend.ipv4_address_private
 }
