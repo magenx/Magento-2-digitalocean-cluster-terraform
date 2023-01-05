@@ -94,7 +94,6 @@ module "frontend" {
   timezone        = var.timezone
   php_version     = var.php_version
   php_packages    = var.php_packages
-  varnish_version = var.varnish_version
   domain          = local.domain
   media_ip        = module.services.media_ip
   brand           = var.brand
