@@ -37,14 +37,10 @@ wget -qO /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
 echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list
 _PHP_PACKAGES+=(${PHP_PACKAGES})
 
-## install varnish
-curl -s https://packagecloud.io/install/repositories/varnishcache/varnish${VARNISH_VERSION}/script.deb.sh | bash
-
 apt-get -qq update -o Dir::Etc::sourcelist="sources.list.d/nginx.list" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0"
 apt-get -qq update -o Dir::Etc::sourcelist="sources.list.d/php.list" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0"
-apt-get -qq update -o Dir::Etc::sourcelist="sources.list.d/varnishcache_varnish${VARNISH_VERSION}.list" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0"
 
-apt-get -qqy -o Dpkg::Options::="--force-confold" install varnish nginx nginx-module-perl nginx-module-image-filter nginx-module-geoip php-pear php${PHP_VERSION} ${_PHP_PACKAGES[@]/#/php${PHP_VERSION}-}
+apt-get -qqy -o Dpkg::Options::="--force-confold" install nginx nginx-module-perl nginx-module-image-filter nginx-module-geoip php-pear php${PHP_VERSION} ${_PHP_PACKAGES[@]/#/php${PHP_VERSION}-}
 
 setfacl -R -m u:nginx:r-X,d:u:nginx:r-X ${WEB_ROOT_PATH}
 
@@ -170,11 +166,6 @@ compress
 }
 END
 
-## varnish configuration
-uuidgen > /etc/varnish/secret
-cp /etc/varnish/varnish.service /etc/systemd/system/
-systemctl daemon-reload
-
 ## nginx configuration
 wget -qO /etc/nginx/fastcgi_params  ${_MAGENX_NGINX_REPO}magento2/fastcgi_params
 wget -qO /etc/nginx/nginx.conf  ${_MAGENX_NGINX_REPO}magento2/nginx.conf
@@ -188,15 +179,7 @@ curl -s ${_MAGENX_NGINX_REPO_API}/conf_m2 2>&1 | awk -F'"' '/download_url/ {prin
 sed -i "s/example.com/${DOMAIN}/g" /etc/nginx/sites-available/magento2.conf
 sed -i "s/example.com/${DOMAIN}/g" /etc/nginx/nginx.conf
 
-sed -i "s/binary_remote_addr/proxy_protocol_addr/" /etc/nginx/nginx.conf
-sed -i "s/remote_addr/proxy_protocol_addr/" /etc/nginx/nginx.conf
 sed -i "s/set_real_ip_from 127.0.0.1/set_real_ip_from ${VPC_CIDR}/" /etc/nginx/nginx.conf
-sed -i '/set_real_ip_from/a\
-    real_ip_header proxy_protocol;' /etc/nginx/nginx.conf
-
-sed -i "s/realip_remote_addr/proxy_protocol_addr/" /etc/nginx/conf_m2/varnish_proxy.conf
-sed -i "s/proxy_add_x_forwarded_for/proxy_protocol_addr/" /etc/nginx/conf_m2/varnish_proxy.conf
-
 sed -i "s,/var/www/html,${WEB_ROOT_PATH}," /etc/nginx/conf_m2/maps.conf
  
 
