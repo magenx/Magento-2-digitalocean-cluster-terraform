@@ -140,7 +140,7 @@ variable "mariadb_version" {
 
 variable "rabbitmq_version" {
   description = "RabbitMQ version to use"
-  default     = "3.8"
+  default     = "3.9"
 }
 
 variable "php_packages" {
