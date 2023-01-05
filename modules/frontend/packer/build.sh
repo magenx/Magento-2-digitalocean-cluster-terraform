@@ -180,5 +180,9 @@ sed -i "s/example.com/${DOMAIN}/g" /etc/nginx/nginx.conf
 
 sed -i "s/set_real_ip_from 127.0.0.1/set_real_ip_from ${VPC_CIDR}/" /etc/nginx/nginx.conf
 sed -i "s,/var/www/html,${WEB_ROOT_PATH}," /etc/nginx/conf_m2/maps.conf
+
+PROFILER_PLACEHOLDER="$(head -c 500 /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 12 | head -n 1)"
+sed -i "s/PROFILER_PLACEHOLDER/${PROFILER_PLACEHOLDER}/" /etc/nginx/conf_m2/maps.conf
+sed -i "s|127.0.0.1:9000|unix:/var/run/${BRAND}.sock|" /etc/nginx/conf_m2/maps.conf
  
 
