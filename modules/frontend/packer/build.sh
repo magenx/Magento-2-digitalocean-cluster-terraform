@@ -118,7 +118,7 @@ php_admin_value[realpath_cache_size] = 4096k
 php_admin_value[realpath_cache_ttl] = 86400
 php_admin_value[session.gc_maxlifetime] = 28800
 php_admin_value[error_log] = "/home/\$pool/public_html/var/log/php-fpm-error.log"
-php_admin_value[date.timezone] = "${MAGENTO_TIMEZONE}"
+php_admin_value[date.timezone] = "${TIMEZONE}"
 php_admin_value[upload_tmp_dir] = "/home/\$pool/public_html/var/tmp"
 php_admin_value[sys_temp_dir] = "/home/\$pool/public_html/var/tmp"
 ;;
