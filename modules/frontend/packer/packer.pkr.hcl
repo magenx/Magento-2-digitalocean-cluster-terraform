@@ -31,7 +31,6 @@ variable "MEDIA_IP" {}
 variable "PHP_PACKAGES" {}
 variable "PHP_VERSION" {}
 variable "TIMEZONE" {}
-variable "VARNISH_VERSION" {}
 variable "VPC_CIDR" {}
 variable "DOMAIN" {}
 
@@ -63,12 +62,6 @@ build {
     "source.digitalocean.latest-image"
   ]
   
-provisioner "file" {
-  source       = "../varnish"
-  destination  = "/etc"
-  pause_before = "10s"
-}
-  
 provisioner "shell" {
   script       = "./build.sh"
   pause_before = "10s"
@@ -82,12 +75,9 @@ provisioner "shell" {
     "PHP_PACKAGES=${var.PHP_PACKAGES}",
     "PHP_VERSION=${var.PHP_VERSION}",
     "TIMEZONE=${var.TIMEZONE}",
-    "VARNISH_VERSION=${var.VARNISH_VERSION}",
     "VPC_CIDR=${var.VPC_CIDR}",
     "DOMAIN=${var.DOMAIN}",
-    "PHP_INI=/etc/php/${var.PHP_VERSION}/fpm/php.ini",
-    "PHP_FPM_POOL=/etc/php/${var.PHP_VERSION}/fpm/pool.d/www.conf",
-    "PHP_OPCACHE_INI=/etc/php/${var.PHP_VERSION}/fpm/conf.d/10-opcache.ini"
+    "PHP_FPM_POOL=/etc/php/${var.PHP_VERSION}/fpm/pool.d/${BRAND}.conf",
   ]
  }
   
