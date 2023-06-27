@@ -53,4 +53,15 @@ resource "digitalocean_project_resources" "services" {
   resources = concat(values(digitalocean_droplet.services)[*].urn,[digitalocean_volume.media.urn])
 }
 
-
+# # ---------------------------------------------------------------------------------------------------------------------#
+# Managed databases mariadb and redis
+# # ---------------------------------------------------------------------------------------------------------------------#
+resource "digitalocean_database_cluster" "this" {
+  for_each   = var.database
+  name       = 
+  engine     = "mysql"
+  version    = "8"
+  size       = "db-s-1vcpu-1gb"
+  region     = "nyc1"
+  node_count = 1
+}
